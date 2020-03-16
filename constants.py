@@ -5,7 +5,6 @@ import pygame
 mc_gyver = pygame.image.load("macgyver.png")
 background = pygame.image.load("fond.jpg")
 wall = pygame.image.load("mur.png")
-start = pygame.image.load("depart.png")
 end = pygame.image.load("guardian.png")
 home_screen = pygame.image.load("home.png")
 tube = pygame.image.load("tube.jpeg")

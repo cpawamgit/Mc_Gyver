@@ -13,7 +13,7 @@ from pygame.locals import *
 
 from constants import *
 from classes import RunningMap
-from classes import CharacterDK
+from classes import CharacterMC
 
 pygame.init() #initializes the module pygame
 quit_game = False #global boolean that can be checked by the menu loop and the game loop
@@ -49,7 +49,7 @@ def menu():
             pygame.display.flip() #displays the frame at the end of loop, after checking all eventual entries from the player
         continue
 
-def game_loop(my_map, dk):
+def game_loop(my_map, mc):
     """function that displays the game and handles the behaviour of the game,
 
     depending on the player entries
@@ -73,19 +73,19 @@ def game_loop(my_map, dk):
                 if event.key == K_TAB: #to display the item list
                     diplay_list = True
                 else:
-                    dk.move_DK(event.key, my_map) #calls the movement fonction of the character
+                    mc.move_MC(event.key, my_map) #calls the movement fonction of the character
             if event.type == KEYUP:
                 if event.key == K_TAB:
                     diplay_list = False
         if run:
             my_map.disply_map()
-            dk.display_DK(my_map)
+            mc.display_MC(my_map)
             if diplay_list:
-                dk.display_list(my_map)
+                mc.display_list(my_map)
             pygame.display.flip()
-        if dk.win or dk.loose: #if the game is finished, calls
+        if mc.win or mc.loose: #if the game is finished, calls
             run = False
-            my_map.display_end(dk)
+            my_map.display_end(mc)
             menu()
         continue
 
@@ -95,8 +95,8 @@ def game(chosen_map):
     my_map.load_map(chosen_map)
     my_map.place_items()
     my_map.place_guardian()
-    dk = CharacterDK()
-    game_loop(my_map, dk)
+    mc = CharacterMC()
+    game_loop(my_map, mc)
 
 if __name__ == "__main__":
     menu()

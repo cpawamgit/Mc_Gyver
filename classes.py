@@ -71,7 +71,6 @@ class RunningMap:
     def disply_map(self):
         """function that displays the maps, the items and the guardian"""
         self.window.blit(background.convert(), (0, 0))
-        self.window.blit(start.convert(), (0, 0))
         self.window.blit(end.convert_alpha(), (self.guard_position))
         x = 0
         y = 0
@@ -89,7 +88,7 @@ class RunningMap:
 
 
     
-class CharacterDK:
+class CharacterMC:
     """this class allows to create the player character, it handles its controls, and chacks if the player has won or loose"""
     def __init__(self):
         self.x = 0
@@ -99,7 +98,7 @@ class CharacterDK:
         self.loose = False
         self.collected_items = []
 
-    def move_DK(self, key, my_map):
+    def move_MC(self, key, my_map):
         """function that handles the movement of the player character"""
         if key == K_DOWN:
             if self.y == 420:
@@ -152,6 +151,6 @@ class CharacterDK:
         if case != 'W':
             return True
 
-    def display_DK(self, my_map):
+    def display_MC(self, my_map):
         my_map.window.blit(self.sprite, (self.x, self.y))
 
