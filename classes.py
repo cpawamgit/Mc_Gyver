@@ -7,7 +7,7 @@ from pygame.locals import *
 from constants import *
 
 class GameItem:
-
+    """this class allows to create game items"""
     def __init__(self, sprite, name):
         self.x = 0
         self.y = 0
@@ -16,7 +16,7 @@ class GameItem:
 
 
 class RunningMap:
-    
+    """this class handles the loading of the map from a txt file, a places all the items and the guardian on it"""
     def __init__(self):
         self.r_map = []
         self.window = pygame.display.set_mode((450, 450))
@@ -27,6 +27,7 @@ class RunningMap:
         self.guard_position = (420, 420)
 
     def load_map(self, chosen_map):
+        """Function that loads the map from a file"""
         with open(chosen_map, "r") as f:
             line = []
             rmap = []
@@ -39,16 +40,18 @@ class RunningMap:
         self.r_map = rmap
 
     def display_end(self, dk):
+        """function that displays the end screen"""
         if dk.win:
-            self.window.blit(you_win, (0, 0))
+            self.window.blit(you_win.convert(), (0, 0))
             pygame.display.flip()
             t.sleep(2)
         else:
-            self.window.blit(you_loose, (0, 0))
+            self.window.blit(you_loose.convert(), (0, 0))
             pygame.display.flip()
             t.sleep(2)
 
     def place_items(self):
+        """function that places the items on the maps"""
         random.shuffle(self.game_items)
         for g_item in self.game_items:
             while True:
@@ -59,7 +62,14 @@ class RunningMap:
                     g_item.y = x * 30
                     break
         
+    def place_guardian(self):
+        """function that places the guardian on the maps"""
+        x = random.randrange(0, 31, 30)
+        y = random.randrange(0, 61, 30)
+        self.guard_position = (420 - x, 420 - y)
+
     def disply_map(self):
+        """function that displays the maps, the items and the guardian"""
         self.window.blit(background.convert(), (0, 0))
         self.window.blit(start.convert(), (0, 0))
         self.window.blit(end.convert_alpha(), (self.guard_position))
@@ -80,7 +90,7 @@ class RunningMap:
 
     
 class CharacterDK:
-
+    """this class allows to create the player character, it handles its controls, and chacks if the player has won or loose"""
     def __init__(self):
         self.x = 0
         self.y = 0
@@ -90,6 +100,7 @@ class CharacterDK:
         self.collected_items = []
 
     def move_DK(self, key, my_map):
+        """function that handles the movement of the player character"""
         if key == K_DOWN:
             if self.y == 420:
                 return
@@ -114,6 +125,7 @@ class CharacterDK:
         self.check_win(my_map)
 
     def display_list(self, my_map):
+        """function that allows to display the list of collected items from the player"""
         listbg = list_bg.convert()
         listbg.set_alpha(70)
         my_map.window.blit(listbg, (0, 350))
@@ -121,6 +133,7 @@ class CharacterDK:
             my_map.window.blit(item.sprite, (7, i * 30 + 355))
         
     def check_win(self, my_map):
+        """function that checks the win or loose condition"""
         if (self.x, self.y) == my_map.guard_position:
             if len(self.collected_items) == 3:
                 self.win = True
@@ -128,11 +141,13 @@ class CharacterDK:
                 self.loose = True
 
     def collect_item(self, my_map):
+        """function that checks if the player has collect an item depending on their position"""
         for i, item in enumerate(my_map.game_items):
             if self.x == item.x and self.y == item.y:
                 self.collected_items.append(my_map.game_items.pop(i))
 
     def move_possible(self, x, y, my_map):
+        """function that checks if the movement toward the choosen direction is possible or not"""
         case = my_map.r_map[(self.y + y) // 30][(self.x + x) // 30]
         if case != 'W':
             return True

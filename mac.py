@@ -1,5 +1,13 @@
 #! env_mcgyver/bin/python
 
+"""This programm is a game, called mc_gyver. The purpose is to collect items in a maze, once the player got them
+
+all, mcgyver crafts an syringe. Then meet the guardian to put him asleep, if you meet the guardian without all the items,
+
+the gard will spot you, so you loose
+
+"""
+
 import pygame
 from pygame.locals import *
 
@@ -7,12 +15,14 @@ from constants import *
 from classes import RunningMap
 from classes import CharacterDK
 
-pygame.init()
-quit_game = False
+pygame.init() #initializes the module pygame
+quit_game = False #global boolean that can be checked by the menu loop and the game loop
 
 def menu():
+    """Function that displays the menu and check the event related to it"""
     global quit_game
-    menu = pygame.display.set_mode((450, 450))
+    display_controls = False
+    menu = pygame.display.set_mode((450, 450)) #initializing the menu surface
     menu_image = home_screen.convert()
     menu.blit(menu_image, (0, 0))
 
@@ -21,37 +31,49 @@ def menu():
         if quit_game == True:
             break
         for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE): #to quit the programm from the menu
                     run = False
-                    quit_game = True
             if event.type == KEYDOWN:
-                if event.key == K_RETURN:
+                if event.key == K_RETURN: #launches the game
                     run = False
                     game("map1.txt")
+                if event.key == K_TAB: #displays controls
+                    display_controls = True
+            if event.type == KEYUP and event.key == K_TAB:
+                display_controls = False
         if run:
-            pygame.display.flip()
+            if display_controls:
+                menu.blit(controls.convert(), (0, 0))
+            else:
+                menu.blit(menu_image, (0, 0))
+            pygame.display.flip() #displays the frame at the end of loop, after checking all eventual entries from the player
         continue
 
 def game_loop(my_map, dk):
+    """function that displays the game and handles the behaviour of the game,
+
+    depending on the player entries
+
+    """ 
     global quit_game
     diplay_list = False
     run = True
     while run:
         pygame.time.Clock().tick(30)
         for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE): #to quit the programm from the game
                     run = False
                     quit_game = True
                     break
-            if event.type == KEYDOWN:
+            if event.type == KEYDOWN: #to return to the menu
                 if event.key == K_m:
                     run = False
                     menu()
                     break
-                if event.key == K_TAB:
+                if event.key == K_TAB: #to display the item list
                     diplay_list = True
                 else:
-                    dk.move_DK(event.key, my_map)
+                    dk.move_DK(event.key, my_map) #calls the movement fonction of the character
             if event.type == KEYUP:
                 if event.key == K_TAB:
                     diplay_list = False
@@ -61,18 +83,20 @@ def game_loop(my_map, dk):
             if diplay_list:
                 dk.display_list(my_map)
             pygame.display.flip()
-        if dk.win or dk.loose:
+        if dk.win or dk.loose: #if the game is finished, calls
             run = False
             my_map.display_end(dk)
+            menu()
         continue
 
 def game(chosen_map):
+    """function that initializes the map and the character, then calls the game loop"""
     my_map = RunningMap()
     my_map.load_map(chosen_map)
     my_map.place_items()
+    my_map.place_guardian()
     dk = CharacterDK()
     game_loop(my_map, dk)
-    menu()
-    #essayer d'implémenter une sortie propre du programme (return 0)
 
-menu()
+if __name__ == "__main__":
+    menu()

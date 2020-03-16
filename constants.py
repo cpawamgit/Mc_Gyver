@@ -1,6 +1,6 @@
 import pygame
 
-"""file that contains constant for the DK game"""
+"""file that contains constants for the mcgyver game"""
 
 mc_gyver = pygame.image.load("macgyver.png")
 background = pygame.image.load("fond.jpg")
@@ -14,7 +14,5 @@ ether = pygame.image.load("ether.jpeg")
 you_win = pygame.image.load("you_win.png")
 you_loose = pygame.image.load("you_loose.png")
 list_bg = pygame.image.load("list_bg.png")
-
-sprite_size = 30
-map_size = (450, 450)
+controls = pygame.image.load("controls.png")
 map1 = "map1.txt"

@@ -32,9 +32,7 @@
 #     pygame.display.flip()
 #     continue
 
-a = (5, 6)
+import random
 
-b = a[0]
-c = a[1]
-
-print(b , c)
+x = random.randrange(0, 61, 30)
+print(x)
