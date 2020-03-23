@@ -99,7 +99,7 @@ class CharacterMC:
         self.collected_items = []
 
     def move_MC(self, key, my_map):
-        """function that handles the movement of the player character"""
+        """function that handles the movement of the player character, and checks if the player can move toward the chosen direction"""
         if key == K_DOWN:
             if self.y == 420:
                 return
