@@ -1,10 +1,10 @@
-#! env_mcgyver/bin/python
+#! env/bin/python
 
 """This programm is a game, called mc_gyver. The purpose is to collect items in a maze, once the player got them
 
 all, mcgyver crafts an syringe. Then meet the guardian to put him asleep, if you meet the guardian without all the items,
 
-the gard will spot you, so you loose
+the gard will spot you, so you loose.
 
 """
 
@@ -36,7 +36,7 @@ def menu():
             if event.type == KEYDOWN:
                 if event.key == K_RETURN: #launches the game
                     run = False
-                    game("map1.txt")
+                    game(map1)
                 if event.key == K_TAB: #displays controls
                     display_controls = True
             if event.type == KEYUP and event.key == K_TAB:
