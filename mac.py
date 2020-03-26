@@ -1,10 +1,8 @@
 #! env/bin/python
 
-"""This programm is a game, called mc_gyver. The purpose is to collect items in a maze, once the player got them
+"""This programm is a game, called mc_gyver. The purpose is to collect items in a maze, in order to make mcgyver craft an syringe.
 
-all, mcgyver crafts an syringe. Then meet the guardian to put him asleep, if you meet the guardian without all the items,
-
-the gard will spot you, so you loose.
+Meet the guardian to put him asleep, if you meet the guardian without the syringe, the gard will spot you, so you loose.
 
 """
 
@@ -65,8 +63,8 @@ def game_loop(my_map, mc):
                     run = False
                     quit_game = True
                     break
-            if event.type == KEYDOWN: #to return to the menu
-                if event.unicode == u'm':
+            if event.type == KEYDOWN: 
+                if event.unicode == u'm': #to return to the menu from the game
                     run = False
                     menu()
                     break

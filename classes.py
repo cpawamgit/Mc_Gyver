@@ -53,13 +53,15 @@ class RunningMap:
     def place_items(self):
         """function that places the items on the maps"""
         random.shuffle(self.game_items)
+        placed = []
         for g_item in self.game_items:
             while True:
                 x = random.randint(1, 11)
                 y = random.randint(0, 14)
-                if self.r_map[x][y] != "W":
+                if self.r_map[x][y] != "W" and (g_item.x, g_item.y) not in placed:
                     g_item.x = y * 30
                     g_item.y = x * 30
+                    placed.append((g_item.x, g_item.y))
                     break
         
     def place_guardian(self):
@@ -126,10 +128,13 @@ class CharacterMC:
     def display_list(self, my_map):
         """function that allows to display the list of collected items from the player"""
         listbg = list_bg.convert()
-        listbg.set_alpha(70)
+        listbg.set_alpha(90)
         my_map.window.blit(listbg, (0, 350))
-        for i, item in enumerate(self.collected_items):
-            my_map.window.blit(item.sprite, (7, i * 30 + 355))
+        if len(self.collected_items) < 3:
+            for i, item in enumerate(self.collected_items):
+                my_map.window.blit(item.sprite, (7, i * 40 + 360))
+        else:
+            my_map.window.blit(syringe.convert_alpha(), (0, 375))
         
     def check_win(self, my_map):
         """function that checks the win or loose condition"""
