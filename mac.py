@@ -66,7 +66,7 @@ def game_loop(my_map, mc):
                     quit_game = True
                     break
             if event.type == KEYDOWN: #to return to the menu
-                if event.key == K_m:
+                if event.unicode == u'm':
                     run = False
                     menu()
                     break
