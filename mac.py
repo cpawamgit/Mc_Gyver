@@ -9,9 +9,9 @@ Meet the guardian to put him asleep, if you meet the guardian without the syring
 import pygame
 from pygame.locals import *
 
-from constants import *
-from classes import RunningMap
-from classes import CharacterMC
+from mcclasses.constants import *
+from mcclasses.runningmap import RunningMap
+from mcclasses.charactermc import CharacterMC
 
 pygame.init() #initializes the module pygame
 quit_game = False #global boolean that can be checked by the menu loop and the game loop
@@ -81,7 +81,7 @@ def game_loop(my_map, mc):
             if diplay_list:
                 mc.display_list(my_map)
             pygame.display.flip()
-        if mc.win or mc.loose: #if the game is finished, calls
+        if mc.win or mc.loose: #if the game is finished, diplays end message, and calls the menu
             run = False
             my_map.display_end(mc)
             menu()
