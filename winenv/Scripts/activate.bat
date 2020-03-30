@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\cpawam\Desktop\Mc_Gyver\winenv"
+set "VIRTUAL_ENV=C:\Users\cpawam\Desktop\testenv\Mc_Gyver\winenv"
 
 if not defined PROMPT (
     set "PROMPT=$P$G"
